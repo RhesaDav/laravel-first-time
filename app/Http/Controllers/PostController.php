@@ -51,7 +51,7 @@ class PostController extends Controller
             $image = $request-> file('image');
             $image -> storeAs('public/posts', $image->hashName());
 
-            Storage::delete('public/posts', $post -> image);
+            Storage::delete('public/posts'. $post -> image);
 
             $post->update([
                 'image' => $image -> hashName(),
@@ -65,5 +65,11 @@ class PostController extends Controller
             ]);
         }
         return redirect() -> route('posts.index') -> with(['success' => 'Data Sudah Dirubah']);
+    }
+
+    public function destroy (Post $post) {
+        Storage::delete('public/posts'. $post->image);
+        $post -> delete();
+        return redirect() -> route('posts.index') -> with(['success' => 'Data Terhapus']);
     }
 }
